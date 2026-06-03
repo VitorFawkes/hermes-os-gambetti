@@ -1,5 +1,5 @@
-import { SpendPage } from "@/components/spend/SpendPage";
+import { SpendDashboard } from "@/components/spend/SpendDashboard";
 
 export default function Page() {
-  return <SpendPage />;
+  return <SpendDashboard />;
 }

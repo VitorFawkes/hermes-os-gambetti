@@ -1,5 +1,5 @@
-import { PantheonPage } from "@/components/pantheon/PantheonPage";
+import { PantheonGrid } from "@/components/pantheon/PantheonGrid";
 
 export default function Page() {
-  return <PantheonPage />;
+  return <PantheonGrid />;
 }

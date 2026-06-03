@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DollarSign, Hexagon, LayoutDashboard, Target, Users } from "lucide-react";
+import { DollarSign, Hexagon, LayoutDashboard, Target, Sparkles, User, Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/pantheon", label: "Pantheon", icon: Users },
+  { href: "/pantheon", label: "Pantheon", icon: Bot },
   { href: "/goals", label: "Goals", icon: Target },
   { href: "/spend", label: "Spend", icon: DollarSign },
+  { href: "/soul", label: "Soul.md", icon: User },
+  { href: "/dreams", label: "Dreams", icon: Sparkles },
 ];
 
 export function Sidebar() {
