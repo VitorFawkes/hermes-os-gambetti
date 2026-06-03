@@ -1,0 +1,9 @@
+Nightly cost report — 2026-06-01 23:55
+
+Model                 Sessions   Tokens     Cost
+claude-opus-4-8        6          1.24M      $12.40
+claude-sonnet-4-6      9          2.01M      $6.03
+claude-haiku-4-5       14         3.88M      $2.71
+
+Total: $21.14 across 29 sessions
+Budget remaining this month: $478.86

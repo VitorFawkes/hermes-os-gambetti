@@ -1,0 +1,7 @@
+Morning brief — 2026-06-02 06:00
+
+- 3 new sessions overnight (2 cron, 1 api)
+- Gateway healthy: anthropic, openai, google connected; groq down
+- Yesterday's spend: $4.18 across 11 sessions
+- Open goal in progress: Unified memory index (60%)
+- No failed cron jobs in the last 24h
