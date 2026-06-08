@@ -6,13 +6,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatTokens(n: number): string {
+export function formatTokens(n: number | null | undefined): string {
+  if (n == null || !Number.isFinite(n)) return "0";
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
   return String(n);
 }
 
-export function formatCost(usd: number): string {
+export function formatCost(usd: number | null | undefined): string {
+  if (usd == null || !Number.isFinite(usd)) return "$0.00";
   if (usd >= 1000) return `$${(usd / 1000).toFixed(2)}k`;
   return `$${usd.toFixed(2)}`;
 }
