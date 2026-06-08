@@ -6,7 +6,15 @@ import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function countEntries(md: string): number {
-  return md.split("\n").filter((line) => line.trim().startsWith("- ")).length;
+  const text = md.trim();
+  if (!text) return 0;
+  const bullets = text.split("\n").filter((l) => l.trim().startsWith("- ")).length;
+  if (bullets > 0) return bullets;
+  // Memories are separated by "§" markers or blank lines.
+  return text
+    .split(/\n\s*§\s*\n?|\n{2,}/)
+    .map((b) => b.trim())
+    .filter(Boolean).length;
 }
 
 export function MemoryOverview() {

@@ -13,6 +13,7 @@ from api.soul import router as soul_router
 from api.dreams import router as dreams_router
 from api.pantheon import router as pantheon_router
 from api.openrouter import router as openrouter_router
+from api.goals import router as goals_router
 
 app = FastAPI(title="Hermes OS API", version="0.1.0")
 
@@ -34,6 +35,7 @@ app.include_router(soul_router)
 app.include_router(dreams_router)
 app.include_router(pantheon_router)
 app.include_router(openrouter_router)
+app.include_router(goals_router)
 
 
 @app.get("/api/health")
