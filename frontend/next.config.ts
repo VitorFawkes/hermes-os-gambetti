@@ -11,6 +11,10 @@ const HERMES_API_URL =
 
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
+  // Backend (FastAPI) usa barra final canônica (/api/sessions/). Sem isto, o Next
+  // remove a barra (308) e o FastAPI re-redireciona perdendo a porta → loop. Deixa
+  // o path passar como o frontend chama.
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     return [
       {
