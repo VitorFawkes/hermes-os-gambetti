@@ -149,6 +149,8 @@ async def list_models():
                 + float(pricing.get("per_1m_output", 0) or 0),
                 2,
             )
+            if cost < 0:
+                cost = 0.0  # router/variable-priced models report -1 pricing
             models.append({
                 "id": m.get("id"),
                 "name": m.get("name") or m.get("id"),
@@ -157,6 +159,7 @@ async def list_models():
             })
     except Exception:
         models = []
+    models.sort(key=lambda m: (m["cost_per_1m"], m["name"] or ""))
     if not models:
         models = _load_config_models()
         source = "default"
