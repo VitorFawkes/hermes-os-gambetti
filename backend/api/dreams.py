@@ -51,7 +51,9 @@ def _get_db():
     """Get read-only connection to state.db."""
     if not os.path.exists(STATE_DB):
         raise HTTPException(status_code=503, detail="state.db not found")
-    return sqlite3.connect(f"file:{STATE_DB}?mode=ro", uri=True)
+    conn = sqlite3.connect(f"file:{STATE_DB}?mode=ro", uri=True)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
 def _analyze_recent_sessions(conn, days: int = 7) -> dict:
