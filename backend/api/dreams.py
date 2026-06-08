@@ -59,7 +59,7 @@ def _analyze_recent_sessions(conn, days: int = 7) -> dict:
     cursor = conn.cursor()
     
     # Recent sessions
-    cutoff = (datetime.now() - timedelta(days=days)).isoformat()
+    cutoff = (datetime.now() - timedelta(days=days)).timestamp()
     cursor.execute(
         "SELECT COUNT(*) as count, COUNT(DISTINCT model) as models, "
         "SUM(input_tokens + output_tokens) as total_tokens, "

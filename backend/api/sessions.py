@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, HTTPException
 
 from db import query, query_one
@@ -10,11 +12,20 @@ COLUMNS = (
 )
 
 
+def _iso_started_at(row):
+    """started_at is stored as Unix seconds; emit ISO 8601 so the frontend parses it correctly."""
+    ts = row.get("started_at")
+    if ts is not None:
+        row["started_at"] = datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+    return row
+
+
 @router.get("/")
 def list_sessions():
-    return query(
+    rows = query(
         f"SELECT {COLUMNS} FROM sessions ORDER BY started_at DESC LIMIT 20"
     )
+    return [_iso_started_at(row) for row in rows]
 
 
 # Declared before "/{session_id}" so the literal path wins over the param route.
@@ -44,4 +55,4 @@ def get_session(session_id: str):
     )
     if row is None:
         raise HTTPException(status_code=404, detail="Session not found")
-    return row
+    return _iso_started_at(row)
