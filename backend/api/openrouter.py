@@ -134,13 +134,13 @@ async def get_costs():
     
     # Daily costs (last 30 days)
     cursor.execute("""
-        SELECT datetime(started_at, 'unixepoch') as date,
+        SELECT date(started_at, 'unixepoch') as date,
                COUNT(*) as sessions,
                SUM(estimated_cost_usd) as cost,
                SUM(input_tokens + output_tokens) as tokens
         FROM sessions
-        WHERE started_at >= date('now', '-30 days')
-        GROUP BY datetime(started_at, 'unixepoch')
+        WHERE started_at >= CAST(strftime('%s', 'now', '-30 days') AS REAL)
+        GROUP BY date(started_at, 'unixepoch')
         ORDER BY date DESC
     """)
     daily_costs = [dict(row) for row in cursor.fetchall()]
