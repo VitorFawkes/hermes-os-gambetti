@@ -120,7 +120,7 @@ async def list_personas():
 
 @router.get("/models")
 async def list_models():
-    """List available models for persona configuration."""
+    """List real available models (live from OpenRouter) for persona configuration."""
     config_path = os.path.expanduser("~/.hermes/config.yaml")
     active_model = "auto"
     active_provider = "openrouter"
@@ -130,13 +130,40 @@ async def list_models():
                 config = yaml.safe_load(f) or {}
             active_model = config.get("model", {}).get("default", "auto")
             active_provider = config.get("model", {}).get("provider", "openrouter")
-    except:
+    except Exception:
         pass
-    
-    models = _load_config_models()
-    
+
+    # Real models — live from OpenRouter (same source as the Spend page),
+    # mapped to the picker shape {id, name, cost_per_1m}.
+    from api.openrouter import list_models as _openrouter_list_models
+
+    models = []
+    source = "default"
+    try:
+        or_resp = await _openrouter_list_models()
+        source = or_resp.get("source", "default")
+        for m in or_resp.get("models", []):
+            pricing = m.get("pricing", {}) or {}
+            cost = round(
+                float(pricing.get("per_1m_input", 0) or 0)
+                + float(pricing.get("per_1m_output", 0) or 0),
+                2,
+            )
+            models.append({
+                "id": m.get("id"),
+                "name": m.get("name") or m.get("id"),
+                "role": "",
+                "cost_per_1m": cost,
+            })
+    except Exception:
+        models = []
+    if not models:
+        models = _load_config_models()
+        source = "default"
+
     return {
         "models": models,
+        "source": source,
         "active_model": active_model,
         "active_provider": active_provider,
         "roles": {
