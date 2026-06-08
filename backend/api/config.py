@@ -5,7 +5,7 @@ from config_reader import read_config
 router = APIRouter(prefix="/api/config", tags=["config"])
 
 
-@router.get("/")
+@router.get("")
 def get_config():
     cfg = read_config()
     model = cfg.get("model", {}) or {}

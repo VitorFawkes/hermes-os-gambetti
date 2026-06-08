@@ -7,7 +7,7 @@ from paths import skills_dir
 router = APIRouter(prefix="/api/skills", tags=["skills"])
 
 
-@router.get("/")
+@router.get("")
 def list_skills():
     root = skills_dir()
     if not os.path.isdir(root):

@@ -15,7 +15,7 @@ def _read(name: str) -> str:
         return f.read()
 
 
-@router.get("/")
+@router.get("")
 def get_memory():
     return {
         "memory_md": _read("MEMORY.md"),

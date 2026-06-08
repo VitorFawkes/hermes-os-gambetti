@@ -20,7 +20,7 @@ def _iso_started_at(row):
     return row
 
 
-@router.get("/")
+@router.get("")
 def list_sessions():
     rows = query(
         f"SELECT {COLUMNS} FROM sessions ORDER BY started_at DESC LIMIT 20"

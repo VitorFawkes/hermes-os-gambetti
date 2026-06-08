@@ -8,7 +8,7 @@ from paths import cron_output_dir
 router = APIRouter(prefix="/api/cron", tags=["cron"])
 
 
-@router.get("/")
+@router.get("")
 def list_cron_outputs():
     root = cron_output_dir()
     if not os.path.isdir(root):
